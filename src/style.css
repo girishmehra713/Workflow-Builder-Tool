@@ -1,0 +1,150 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg: #0f172a;
+    --color-surface: #1e293b;
+    --color-surface-hover: #334155;
+    --color-border: #334155;
+    --color-text: #f1f5f9;
+    --color-text-muted: #94a3b8;
+    --color-primary: #3b82f6;
+    --color-primary-hover: #2563eb;
+    --color-success: #22c55e;
+    --color-error: #ef4444;
+    --color-warning: #f59e0b;
+    --color-trigger: #8b5cf6;
+    --color-action: #3b82f6;
+    --color-logic: #f59e0b;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+
+  #app {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+/* Vue Flow overrides */
+.vue-flow {
+  background: var(--color-bg) !important;
+}
+
+.vue-flow__minimap {
+  background: var(--color-surface) !important;
+  border-radius: 8px;
+  border: 1px solid var(--color-border) !important;
+}
+
+.vue-flow__controls {
+  border-radius: 8px;
+  border: 1px solid var(--color-border) !important;
+  overflow: hidden;
+}
+
+.vue-flow__controls-button {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.vue-flow__controls-button:hover {
+  background: var(--color-surface-hover) !important;
+}
+
+.vue-flow__edge-path {
+  stroke: #475569;
+  stroke-width: 2;
+}
+
+.vue-flow__edge.selected .vue-flow__edge-path {
+  stroke: var(--color-primary);
+  stroke-width: 3;
+}
+
+.vue-flow__edge.animated .vue-flow__edge-path {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+}
+
+.vue-flow__handle {
+  width: 12px !important;
+  height: 12px !important;
+  border: 2px solid var(--color-border) !important;
+  background: var(--color-surface) !important;
+}
+
+.vue-flow__handle:hover {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+.vue-flow__selection {
+  background: rgba(59, 130, 246, 0.1) !important;
+  border: 1px solid var(--color-primary) !important;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+.node-running {
+  animation: pulse-ring 1.5s ease-out infinite;
+}
+
+.node-success {
+  box-shadow: 0 0 0 3px var(--color-success);
+}
+
+.node-error {
+  box-shadow: 0 0 0 3px var(--color-error);
+}
+
+.node-skipped {
+  opacity: 0.4;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

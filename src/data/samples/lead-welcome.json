@@ -1,0 +1,157 @@
+{
+  "nodes": [
+    {
+      "id": "node_trigger_1",
+      "type": "trigger-webhook",
+      "position": {
+        "x": 300,
+        "y": 50
+      },
+      "data": {
+        "label": "New Lead Webhook",
+        "nodeType": "trigger-webhook",
+        "config": {
+          "label": "New Lead Webhook",
+          "webhookUrl": "https://api.example.com/webhooks/new-lead",
+          "method": "POST"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_condition_1",
+      "type": "logic-condition",
+      "position": {
+        "x": 300,
+        "y": 200
+      },
+      "data": {
+        "label": "Check Lead Source",
+        "nodeType": "logic-condition",
+        "config": {
+          "label": "Check Lead Source",
+          "field": "status",
+          "operator": "equals",
+          "value": "active"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_email_1",
+      "type": "action-email",
+      "position": {
+        "x": 200,
+        "y": 380
+      },
+      "data": {
+        "label": "Welcome Email",
+        "nodeType": "action-email",
+        "config": {
+          "label": "Welcome Email",
+          "to": "lead@example.com",
+          "subject": "Welcome aboard!",
+          "body": "Hi there! Welcome to our platform. We're glad to have you."
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_sms_1",
+      "type": "action-sms",
+      "position": {
+        "x": 500,
+        "y": 380
+      },
+      "data": {
+        "label": "Notify Sales",
+        "nodeType": "action-sms",
+        "config": {
+          "label": "Notify Sales",
+          "phoneNumber": "+1234567890",
+          "message": "New inactive lead received. Please review."
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_delay_1",
+      "type": "action-delay",
+      "position": {
+        "x": 200,
+        "y": 530
+      },
+      "data": {
+        "label": "Wait 1 Hour",
+        "nodeType": "action-delay",
+        "config": {
+          "label": "Wait 1 Hour",
+          "duration": 1,
+          "unit": "hours"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_http_1",
+      "type": "action-http",
+      "position": {
+        "x": 200,
+        "y": 680
+      },
+      "data": {
+        "label": "Update CRM",
+        "nodeType": "action-http",
+        "config": {
+          "label": "Update CRM",
+          "url": "https://api.example.com/crm/update",
+          "method": "POST",
+          "headers": {
+            "Authorization": "Bearer token123"
+          },
+          "body": "{\"status\": \"welcomed\"}"
+        },
+        "status": "idle"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_trigger_condition",
+      "source": "node_trigger_1",
+      "target": "node_condition_1",
+      "animated": false
+    },
+    {
+      "id": "edge_condition_email",
+      "source": "node_condition_1",
+      "target": "node_email_1",
+      "sourceHandle": "source-true",
+      "animated": false
+    },
+    {
+      "id": "edge_condition_sms",
+      "source": "node_condition_1",
+      "target": "node_sms_1",
+      "sourceHandle": "source-false",
+      "animated": false
+    },
+    {
+      "id": "edge_email_delay",
+      "source": "node_email_1",
+      "target": "node_delay_1",
+      "animated": false
+    },
+    {
+      "id": "edge_delay_http",
+      "source": "node_delay_1",
+      "target": "node_http_1",
+      "animated": false
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  }
+}

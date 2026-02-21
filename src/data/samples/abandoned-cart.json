@@ -1,0 +1,154 @@
+{
+  "nodes": [
+    {
+      "id": "node_trigger_1",
+      "type": "trigger-webhook",
+      "position": { "x": 300, "y": 50 },
+      "data": {
+        "label": "Cart Abandoned",
+        "nodeType": "trigger-webhook",
+        "config": {
+          "label": "Cart Abandoned",
+          "webhookUrl": "https://api.example.com/webhooks/cart-abandoned",
+          "method": "POST"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_delay_1",
+      "type": "action-delay",
+      "position": { "x": 300, "y": 200 },
+      "data": {
+        "label": "Wait 30 Minutes",
+        "nodeType": "action-delay",
+        "config": {
+          "label": "Wait 30 Minutes",
+          "duration": 30,
+          "unit": "minutes"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_http_1",
+      "type": "action-http",
+      "position": { "x": 300, "y": 350 },
+      "data": {
+        "label": "Check Cart Status",
+        "nodeType": "action-http",
+        "config": {
+          "label": "Check Cart Status",
+          "url": "https://api.example.com/cart/status",
+          "method": "GET",
+          "headers": {},
+          "body": ""
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_condition_1",
+      "type": "logic-condition",
+      "position": { "x": 300, "y": 500 },
+      "data": {
+        "label": "Still Abandoned?",
+        "nodeType": "logic-condition",
+        "config": {
+          "label": "Still Abandoned?",
+          "field": "status",
+          "operator": "equals",
+          "value": "active"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_email_1",
+      "type": "action-email",
+      "position": { "x": 150, "y": 680 },
+      "data": {
+        "label": "Send Reminder Email",
+        "nodeType": "action-email",
+        "config": {
+          "label": "Send Reminder Email",
+          "to": "customer@example.com",
+          "subject": "You left items in your cart!",
+          "body": "Hi! You still have items in your cart. Complete your purchase and get 10% off with code COMEBACK10."
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_transform_1",
+      "type": "logic-transform",
+      "position": { "x": 450, "y": 680 },
+      "data": {
+        "label": "Log Conversion",
+        "nodeType": "logic-transform",
+        "config": {
+          "label": "Log Conversion",
+          "expression": "cart.total * 1.0",
+          "outputVariable": "conversionValue"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "node_sms_1",
+      "type": "action-sms",
+      "position": { "x": 150, "y": 850 },
+      "data": {
+        "label": "SMS Follow-up",
+        "nodeType": "action-sms",
+        "config": {
+          "label": "SMS Follow-up",
+          "phoneNumber": "+1987654321",
+          "message": "Don't forget your cart! Use code COMEBACK10 for 10% off."
+        },
+        "status": "idle"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1",
+      "source": "node_trigger_1",
+      "target": "node_delay_1",
+      "animated": false
+    },
+    {
+      "id": "edge_2",
+      "source": "node_delay_1",
+      "target": "node_http_1",
+      "animated": false
+    },
+    {
+      "id": "edge_3",
+      "source": "node_http_1",
+      "target": "node_condition_1",
+      "animated": false
+    },
+    {
+      "id": "edge_4",
+      "source": "node_condition_1",
+      "target": "node_email_1",
+      "sourceHandle": "source-true",
+      "animated": false
+    },
+    {
+      "id": "edge_5",
+      "source": "node_condition_1",
+      "target": "node_transform_1",
+      "sourceHandle": "source-false",
+      "animated": false
+    },
+    {
+      "id": "edge_6",
+      "source": "node_email_1",
+      "target": "node_sms_1",
+      "animated": false
+    }
+  ],
+  "viewport": { "x": 0, "y": 0, "zoom": 1 }
+}
